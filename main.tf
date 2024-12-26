@@ -30,7 +30,6 @@ terraform {
   }
 
   required_version = ">= 1.2.0"
-  #the version of terraform
 }
 
 provider "aws" {
@@ -42,19 +41,19 @@ resource "aws_security_group" "subnet_security_group" {
   description = "Practice Security Group by Vinh"
   vpc_id      = data.aws_subnet.selected.vpc_id
 
-#   ingress {
-#     description = "HTTPS Ingress"
-#     from_port   = 3000
-#     to_port     = 3000
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = -1
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
+  # ingress {
+  #   description = "HTTPS Ingress"
+  #   from_port   = 443
+  #   to_port     = 443
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
+  #   egress {
+  #     from_port   = 0
+  #     to_port     = 0
+  #     protocol    = -1
+  #     cidr_blocks = ["0.0.0.0/0"]
+  #   }
 }
 
 resource "aws_instance" "practice_app_server" {
@@ -66,8 +65,9 @@ resource "aws_instance" "practice_app_server" {
     Name = "PracticeAppServer"
   }
 
-  subnet_id = var.subnet_id
-   vpc_security_group_ids      = [aws_security_group.subnet_security_group.id]
+  subnet_id              = var.subnet_id
+  vpc_security_group_ids = [aws_security_group.subnet_security_group.id]
+
 }
 
 output "instance_public_dns" {
